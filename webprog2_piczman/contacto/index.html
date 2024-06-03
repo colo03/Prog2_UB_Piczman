@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <head>
       <link rel="stylesheet" type="text/css" href="../css/style.css" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="../js/javascript.js"></script> 
       <title> CONTACTO  </title>
-      <script langueage ="javascript"></script>
+  
     </head>
     <body>
         <div class ="navbar">
@@ -23,18 +25,26 @@
    
     <div class="main">
         <form>
-          <label for="pnombre" class="pnombre">Nombre</label><br>
-          <input type="Text" id="pnombre" name="pnombre"><br><br>
+          <label for="pnombre" class="pnombre" >Nombre</label><br>
+          <input type="Text" id="pnombre" name="pnombre" required><br><br>
           <label for="apellido" class ="pnombre">Apellido</label><br>
-          <input type="Text" id="apellido" name="apellido"><br> <br>
+          <input type="Text" id="apellido" name="apellido" required><br> <br>
           <label for ="mail" class ="pnombre">Email</label><br>
-          <input type ="email" id="mail" name ="mail"><br><br>
-          <input type ="checkbox" id ="chequeo" name ="chequeo"><br><br>
-          <p>Deja tu mensaje </p> 
-          <textarea rows ="8" cols="25" class ="pnombre"></textarea><br><br>
+          <input type ="email" id="mail" name ="mail" required><br><br>
+          <input type ="checkbox" id ="chequeo" name ="chequeo" required>
           <label for ="chequeo" class ="pnombre">Acepto los terminos y condiciones </label><br> <br>
-          <input type="submit"> <br>
+          <p>Deja tu mensaje </p> 
+          <textarea rows ="8" cols="25" class ="pnombre" required></textarea><br><br>
+          <div>
+            <button onclick="openFn()">Enviar</button>
+            <div id="overlay" class="hidden"> </div>
+              <div id="popupDialog" class="hidden">
+              <p>Formulario enviado correctamente</p>
+              <button onclick="openFn()">Cerrar</button>
+            </div>
+          </div>
         </form>
+      <div id="bola"></div>
       </div>
     </body>
 </html> 

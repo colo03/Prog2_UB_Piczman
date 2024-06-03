@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example 2</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            #popupContainer {
+                position: relative;
+            }
+
+            #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                display: none;
+            }
+
+            #popupDialog {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 20px
+                    rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                opacity: 0;
+                transition: opacity 0.3s
+                    ease-in-out;
+            }
+
+            h1 {
+                color: #4caf50;
+                margin-bottom: 20px;
+            }
+
+            p {
+                color: #333;
+                margin-bottom: 15px;
+            }
+
+            button {
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s
+                    ease-in-out;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="popupContainer">
+            <h1>GeeksforGeeks</h1>
+            <h3>Using classList Property</h3>
+            <button onclick="openFn()">
+                Open Popup
+            </button>
+            <div
+                id="overlay"
+                class="hidden"
+            ></div>
+            <div id="popupDialog" class="hidden">
+                <p>
+                    Welcome to a more stylish
+                    GeeksforGeeks experience!
+                </p>
+                <button onclick="openFn()">
+                    Close
+                </button>
+            </div>
+        </div>
+        <script>
+            function openFn() {
+                const over =
+                    document.getElementById(
+                        "overlay"
+                    );
+                const popDialog =
+                    document.getElementById(
+                        "popupDialog"
+                    );
+                over.classList.toggle("hidden");
+                popDialog.classList.toggle(
+                    "hidden"
+                );
+                popDialog.style.opacity =
+                    popDialog.style.opacity ===
+                    "1"
+                        ? "0"
+                        : "1";
+            }
+        </script>
+    </body>
+</html>
