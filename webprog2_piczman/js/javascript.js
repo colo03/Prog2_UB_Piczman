@@ -12,3 +12,4 @@ $(function(){
 function alerta(){
   alert("Formulario enviado correctamente")
 }
+
