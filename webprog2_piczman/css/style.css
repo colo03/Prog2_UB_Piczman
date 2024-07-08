@@ -72,6 +72,8 @@
     color: rgb(32, 22, 22);
     width: 50%;
     margin: auto;
+
+
   }
   .main_inicio {
  
@@ -81,8 +83,22 @@
     font-size: 1.5rem; 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: rgb(32, 22, 22);
-    width: 50%;
+    width: 75vw;
     margin: auto;
+  }
+  @media (max-width: 600px) {
+    div.main_inicio {
+      font-size: 1.5rem;
+      width: 75vw; 
+    }
+  }
+  
+  
+  @media (max-width: 600px) {
+    div.main_inicio {
+      font-size: 1.5rem; 
+      width: 90vw;
+    }
   }
   h1{
     text-align:center;
@@ -182,7 +198,7 @@ div.sobre_mi {
   width: 50%;
   margin: auto;
 }
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   div.main_trabajos {
     font-size: 1.5rem;
     width: 75vw; 
@@ -190,7 +206,7 @@ div.sobre_mi {
 }
 
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   div.main_trabajos {
     font-size: 1.5rem; 
     width: 90vw;
@@ -224,14 +240,14 @@ div.desc {
 
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 600px) {
   .responsive_trabajos {
     width: 100%;
     margin: 6px 0;
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .responsive_trabajos {
     width: 100%;
   }
