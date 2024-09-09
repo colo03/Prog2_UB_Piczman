@@ -1,3 +1,10 @@
+<?php
+$mysqli = new mysqli('localhost', 'root', '', 'registro');
+
+if ($mysqli->connect_error) {
+    die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -39,8 +46,10 @@
 			<form action="php/upload.php" method="post" enctype="multipart/form-data">
   Subi un archivo:
   <input type="file" name="fileToUpload" id="fileToUpload"><br>
-  <input type="submit" value="Upload Image" name="submit"> 
+  <input type="submit" value="Subir tu archivo" name="submit"> 
 </form>
+
+
         </div>
 			
     </body>

@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'lista_paises');
+$mysqli = new mysqli('localhost', 'root', '', 'total_paises');
 
 if ($mysqli->connect_error) {
     die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
@@ -38,25 +38,22 @@ if ($mysqli->connect_error) {
     <div class="main_contacto">
       Dejame un mensaje para que trabajemos juntos <br><br>
         <form action="../php/valid.php" method="post" name="frm">
-          <label for="pnombre" class="pnombre" >Nombre</label><br>
-          <input type="Text" id="pnombre" name="nombre" required/><br>
-          <label for="apellido" class ="pnombre">Apellido</label><br>
-          <input type="Text" id="apellido" name="apellido" required/><br> 
-          <label for ="mail" class ="pnombre">Email</label><br>
-          <input type ="email" id="mail" name ="mail" required/><br>
-
-          <p>Deja tu mensaje </p> 
-          <textarea rows ="5" cols="25" class ="desc"  name ="desc" required></textarea><br>
+          <label for="pnombre" class="pnombre" ></label><br>
+          <input type="Text" id="pnombre" name="nombre" placeholder ="Nombre" required/><br>
+          <label for="apellido" class ="pnombre"></label><br>
+          <input type="Text" id="apellido" name="apellido" placeholder ="Apellido" required/><br> 
+          <label for ="mail" class ="pnombre" ></label><br>
+          <input type ="email" id="mail" name ="mail" placeholder="Mail"required/><br><br>
+          <textarea rows ="5" cols="25" class ="desc"  name ="desc" placeholder="Deja tu mensaje"required></textarea><br>
           <input type ="checkbox" id ="chequeo" name ="chequeo" required>
           <label for ="chequeo" class ="desc">Acepto los terminos y condiciones </label><br> 
-          <p>Seleccione un pais del siguiente menú:</p>  
-    <p>Paises:
+          <label class ="desc">Seleccione su país:</label>  
       <select> 
-       <option value="0">Seleccione:</option> 
+       <option value="0" name ="pais">País</option> 
        <?php 
-        $query = $mysqli -> query ("SELECT * FROM paises");
+        $query = $mysqli -> query ("SELECT * FROM pais");
         while ($valores = mysqli_fetch_array($query)) {
-          echo '<option value="'.$valores['id'].'">'.$valores['npais'].'</option>'; 
+          echo '<option value="'.$valores['id'].'">'.$valores['paisnombre'].'</option>'; 
         } 
        ?> 
         </select> <br>
