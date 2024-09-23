@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'registro');
+$mysqli = new mysqli('localhost', 'root', '', '');
 
 if ($mysqli->connect_error) {
     die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
@@ -16,7 +16,7 @@ if ($mysqli->connect_error) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title> INICIO </title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="../../php/webprog2_piczman/js/javascript.js"></script>
+        <script src="js/javascript.js"></script>
         <script>window.alert("Bienvenidos");</script>
         </head>
         <body>

@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'total_paises');
+$mysqli = new mysqli('localhost', 'root', '', 'paises');
 
 if ($mysqli->connect_error) {
     die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
@@ -51,7 +51,7 @@ if ($mysqli->connect_error) {
       <select> 
        <option value="0" name ="pais">País</option> 
        <?php 
-        $query = $mysqli -> query ("SELECT * FROM pais");
+        $query = $mysqli -> query ("SELECT * FROM pais ORDER BY paisnombre");
         while ($valores = mysqli_fetch_array($query)) {
           echo '<option value="'.$valores['id'].'">'.$valores['paisnombre'].'</option>'; 
         } 
