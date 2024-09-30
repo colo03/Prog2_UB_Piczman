@@ -46,7 +46,7 @@ if ($mysqli->connect_error) {
 			<form action="php/upload.php" method="post" enctype="multipart/form-data">
   Subi un archivo:
   <input type="file" name="fileToUpload" id="fileToUpload"><br>
-  <input type="submit" value="Subir tu archivo" name="submit"> 
+  <input type="submit" value="Subir tu archivo"> 
 </form>
 
 

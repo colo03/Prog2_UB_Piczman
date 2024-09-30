@@ -51,7 +51,7 @@ if ($mysqli->connect_error) {
       <select> 
        <option value="0" name ="pais">País</option> 
        <?php 
-        $query = $mysqli -> query ("SELECT * FROM pais ORDER BY paisnombre");
+        $query = $mysqli -> query ("SELECT * FROM paises ORDER BY paisnombre");
         while ($valores = mysqli_fetch_array($query)) {
           echo '<option value="'.$valores['id'].'">'.$valores['paisnombre'].'</option>'; 
         } 
