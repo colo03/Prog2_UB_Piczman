@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'registro');
+$mysqli = new mysqli('localhost', 'root', '', '');
 
 if ($mysqli->connect_error) {
     die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
@@ -16,7 +16,7 @@ if ($mysqli->connect_error) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title> INICIO </title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="../../php/webprog2_piczman/js/javascript.js"></script>
+        <script src="js/javascript.js"></script>
         <script>window.alert("Bienvenidos");</script>
         </head>
         <body>
@@ -26,6 +26,7 @@ if ($mysqli->connect_error) {
                 <a href="trabajos/index.php">Trabajos</a>
                 <a href="contacto/index.php">Contacto </a>
                 <a href="sobre_mi/index.php">Sobre mí</a>
+                <a href = "juego/index.html">Juego </a>
                 <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                   <i class="fa fa-bars"></i>
                 </a>
@@ -46,7 +47,7 @@ if ($mysqli->connect_error) {
 			<form action="php/upload.php" method="post" enctype="multipart/form-data">
   Subi un archivo:
   <input type="file" name="fileToUpload" id="fileToUpload"><br>
-  <input type="submit" value="Subir tu archivo" name="submit"> 
+  <input type="submit" value="Subir tu archivo"> 
 </form>
 
 

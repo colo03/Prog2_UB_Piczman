@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'total_paises');
+$mysqli = new mysqli('localhost', 'root', '', 'lista_paises');
 
 if ($mysqli->connect_error) {
     die('Error de conexión (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
@@ -26,6 +26,7 @@ if ($mysqli->connect_error) {
         <a href="..\trabajos\index.php">Trabajos</a>
         <a href="#"class="active">Contacto </a>
         <a href="..\sobre_mi\index.php">Sobre mí</a>
+        <a href="..\juego\index.php">Juego</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
@@ -51,7 +52,7 @@ if ($mysqli->connect_error) {
       <select> 
        <option value="0" name ="pais">País</option> 
        <?php 
-        $query = $mysqli -> query ("SELECT * FROM pais");
+        $query = $mysqli -> query ("SELECT * FROM pais ORDER BY paisnombre");
         while ($valores = mysqli_fetch_array($query)) {
           echo '<option value="'.$valores['id'].'">'.$valores['paisnombre'].'</option>'; 
         } 

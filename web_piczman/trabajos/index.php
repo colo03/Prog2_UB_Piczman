@@ -19,6 +19,7 @@
         <a href="..\trabajos\index.php" class="active">Trabajos</a>
         <a href="..\contacto\index.php">Contacto </a>
         <a href="..\sobre_mi\index.php">Sobre mí</a>
+        <a href="..\juego\index.php">Juego</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
@@ -53,17 +54,16 @@
           <div class="desc">Prime x Dr Lemon</div>
         </div>
       </div>
-      <div class="responsive_trabajos2">
-        <div class="gallery2">
-          <a>
-            <div id="bola" ></div>
-          </a>
-          <br><br><br><br><br><br><br><br><br><br><br><br>
-          <br><br><br><br><br>
-          <div class="desc">Animación</div>
-        </div>
       </div>
-
+      <div class="responsive_trabajos">
+    <div class="gallery">
+        <!-- Cambia el atributo href para enlazar directamente el archivo -->
+        <a href="https://drive.google.com/file/d/1cp8sfcK8cOUuWQkMX81xbdIYd08QIHL3/view?usp=sharing" target="_blank">
+            <img src="../imagenes_videos/mit_logo.png" alt="Mit Logo">
+        </a>
+        <div class="desc">Videojuego en Appinventor</div>
+    </div>
+</div>
      
       
     </body>

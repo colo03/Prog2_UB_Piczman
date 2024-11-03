@@ -1,0 +1,208 @@
+<html><body><pre>
+    <span style="color: #E7671C;">PImage</span> img;
+    <span style="color: #E7671C;">int</span> playerXCor = 600;
+    <span style="color: #E7671C;">int</span> playerYCor = 550;
+    <span style="color: #E7671C;">int</span> playerWidth = 40;
+    <span style="color: #E7671C;">int</span> playerHeight = 40;
+    <span style="color: #E7671C;">int</span> difficulty = 5;
+    <span style="color: #E7671C;">int</span> limit = 30;
+    <span style="color: #E7671C;">float</span> score = 0;
+    Baddie[]&nbsp;baddies;
+    <span style="color: #E7671C;">boolean</span> isCollided = <span style="color: #30987F;">false</span>;
+    <span style="color: #E7671C;">boolean</span> moveLeft = <span style="color: #30987F;">false</span>;
+    <span style="color: #E7671C;">boolean</span> moveRight = <span style="color: #30987F;">false</span>;
+    <span style="color: #E7671C;">int</span> moveSpeed = 5; <span style="color: #656565;">// Velocidad de movimiento</span>
+    <span style="color: #E7671C;">boolean</span> gameStarted = <span style="color: #30987F;">false</span>; <span style="color: #656565;">// Para controlar la pantalla de inicio</span>
+    <span style="color: #E7671C;">boolean</span> showInstructions = <span style="color: #30987F;">false</span>; <span style="color: #656565;">// Variable para controlar la visualizaci&#243;n de las instrucciones</span>
+    
+    <span style="color: #30987F;">void</span> initBaddies(<span style="color: #E7671C;">int</span> xMin, <span style="color: #E7671C;">int</span> xMax, <span style="color: #E7671C;">int</span> yMin, <span style="color: #E7671C;">int</span> yMax, <span style="color: #E7671C;">int</span> num) {
+    &nbsp;&nbsp;baddies&nbsp;=&nbsp;<span style="color: #30987F;">new</span> Baddie[num];
+    &nbsp;&nbsp;<span style="color: #6D9810;">for</span> (<span style="color: #E7671C;">int</span> i = 0; i &lt; baddies.<span style="color: #30987F;">length</span>; i++) {
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">int</span> x = (<span style="color: #E7671C;">int</span>)<span style="color: #006698;">random</span>(xMin, xMax);
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">int</span> y = (<span style="color: #E7671C;">int</span>)<span style="color: #006698;">random</span>(yMin, yMax);
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">int</span> diameter = 30; <span style="color: #656565;">// Puedes ajustar el di&#225;metro como prefieras</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;baddies[i]&nbsp;=&nbsp;<span style="color: #30987F;">new</span> Baddie(x, y, diameter);
+    &nbsp;&nbsp;}
+    }
+    
+    <span style="color: #30987F;">void</span> <span style="color: #006698;"><b>setup</b></span>() {
+    &nbsp;&nbsp;<span style="color: #006698;">size</span>(1280, 720);
+    &nbsp;&nbsp;img&nbsp;=&nbsp;<span style="color: #006698;">loadImage</span>(<span style="color: #738A63;">&quot;bg.png&quot;</span>);
+    &nbsp;&nbsp;initBaddies(-100,&nbsp;<span style="color: #DB4D7A;">width</span> + 20, -250, -80, difficulty);
+    }
+    
+    <span style="color: #30987F;">void</span> <span style="color: #006698;"><b>draw</b></span>() {
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (!gameStarted) {
+    &nbsp;&nbsp;&nbsp;&nbsp;showStartScreen();&nbsp;<span style="color: #656565;">// Mostrar pantalla de inicio</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #30987F;">return</span>;
+    &nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (!isCollided) {
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #006698;">image</span>(img, 0, 0); <span style="color: #656565;">// Usar la imagen en lugar del fondo</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;drawPlayer();
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6D9810;">if</span> (moveLeft &amp;&amp; playerXCor &gt; 0) {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerXCor&nbsp;-=&nbsp;moveSpeed;
+    &nbsp;&nbsp;&nbsp;&nbsp;}
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6D9810;">if</span> (moveRight &amp;&amp; playerXCor &lt; <span style="color: #DB4D7A;">width</span> - playerWidth) {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerXCor&nbsp;+=&nbsp;moveSpeed;
+    &nbsp;&nbsp;&nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;moveBaddies();
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6D9810;">if</span> (score &gt; limit &amp;&amp; score &lt; limit + 2) {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initBaddies(-100,&nbsp;<span style="color: #DB4D7A;">width</span> + 20, -260, -80, difficulty); 
+    &nbsp;&nbsp;difficulty&nbsp;+=&nbsp;5;&nbsp;<span style="color: #656565;">// Aumenta la dificultad menos en cada intervalo</span>
+    &nbsp;&nbsp;limit&nbsp;+=&nbsp;30;
+    &nbsp;&nbsp;&nbsp;&nbsp;}
+    &nbsp;&nbsp;}&nbsp;<span style="color: #6D9810;">else</span> {
+    &nbsp;&nbsp;&nbsp;&nbsp;showGameOverScreen();&nbsp;<span style="color: #656565;">// Mostrar pantalla de &quot;Perdiste&quot;</span>
+    &nbsp;&nbsp;}
+    }
+    
+    <span style="color: #30987F;">void</span> <span style="color: #006698;"><b>keyPressed</b></span>() {
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (!gameStarted) {
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6D9810;">if</span> (showInstructions) {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showInstructions&nbsp;=&nbsp;<span style="color: #30987F;">false</span>; <span style="color: #656565;">// Ocultar instrucciones si ya est&#225;n visibles</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span style="color: #6D9810;">else</span> {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gameStarted&nbsp;=&nbsp;<span style="color: #30987F;">true</span>; <span style="color: #656565;">// Iniciar el juego</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isCollided&nbsp;=&nbsp;<span style="color: #30987F;">false</span>; <span style="color: #656565;">// Reiniciar colisi&#243;n</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;0;&nbsp;<span style="color: #656565;">// Reiniciar puntaje</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;difficulty&nbsp;=&nbsp;10;&nbsp;<span style="color: #656565;">// Reiniciar dificultad</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initBaddies(-100,&nbsp;<span style="color: #DB4D7A;">width</span> + 20, -250, -80, difficulty); <span style="color: #656565;">// Reiniciar obst&#225;culos</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #30987F;">return</span>;
+    &nbsp;&nbsp;&nbsp;&nbsp;}
+    &nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (isCollided) {
+    &nbsp;&nbsp;&nbsp;&nbsp;gameStarted&nbsp;=&nbsp;<span style="color: #30987F;">false</span>; <span style="color: #656565;">// Volver al estado de inicio</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #30987F;">return</span>;
+    &nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (<span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;a&apos;</span> || <span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;A&apos;</span>) {
+    &nbsp;&nbsp;&nbsp;&nbsp;moveLeft&nbsp;=&nbsp;<span style="color: #30987F;">true</span>;
+    &nbsp;&nbsp;}
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (<span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;d&apos;</span> || <span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;D&apos;</span>) {
+    &nbsp;&nbsp;&nbsp;&nbsp;moveRight&nbsp;=&nbsp;<span style="color: #30987F;">true</span>;
+    &nbsp;&nbsp;}
+    }
+    
+    <span style="color: #30987F;">void</span> <span style="color: #006698;"><b>keyReleased</b></span>() {
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (<span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;a&apos;</span> || <span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;A&apos;</span>) {
+    &nbsp;&nbsp;&nbsp;&nbsp;moveLeft&nbsp;=&nbsp;<span style="color: #30987F;">false</span>;
+    &nbsp;&nbsp;}
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (<span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;d&apos;</span> || <span style="color: #DB4D7A;">key</span> == <span style="color: #738A63;">&apos;D&apos;</span>) {
+    &nbsp;&nbsp;&nbsp;&nbsp;moveRight&nbsp;=&nbsp;<span style="color: #30987F;">false</span>;
+    &nbsp;&nbsp;}
+    }
+    
+    <span style="color: #30987F;">void</span> <span style="color: #006698;"><b>mousePressed</b></span>() {
+    &nbsp;&nbsp;<span style="color: #656565;">// Verifica si el mouse est&#225; sobre el bot&#243;n &quot;C&#243;mo jugar&quot;</span>
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (!gameStarted &amp;&amp; <span style="color: #DB4D7A;">mouseX</span> &gt;= <span style="color: #DB4D7A;">width</span> / 2 - 100 &amp;&amp; <span style="color: #DB4D7A;">mouseX</span> &lt;= <span style="color: #DB4D7A;">width</span> / 2 + 100 &amp;&amp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #DB4D7A;">mouseY</span> &gt;= <span style="color: #DB4D7A;">height</span> / 2 + 20 &amp;&amp; <span style="color: #DB4D7A;">mouseY</span> &lt;= <span style="color: #DB4D7A;">height</span> / 2 + 70) {
+    &nbsp;&nbsp;&nbsp;&nbsp;showInstructions&nbsp;=&nbsp;!showInstructions;&nbsp;<span style="color: #656565;">// Alternar la visualizaci&#243;n de las instrucciones</span>
+    &nbsp;&nbsp;}
+    }
+    
+    <span style="color: #30987F;">void</span> moveBaddies() {
+    &nbsp;&nbsp;<span style="color: #6D9810;">for</span> (<span style="color: #E7671C;">int</span> i = 0; i &lt; baddies.<span style="color: #30987F;">length</span>; i++) {
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6D9810;">if</span> (baddies[i].yCor &gt; <span style="color: #DB4D7A;">height</span>) {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;baddies[i].yCor&nbsp;=&nbsp;-10;
+    &nbsp;&nbsp;&nbsp;&nbsp;}
+    &nbsp;&nbsp;&nbsp;&nbsp;baddies[i].display();
+    &nbsp;&nbsp;&nbsp;&nbsp;baddies[i].drop(<span style="color: #006698;">random</span>(1, 15));
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #656565;">// Calcula la distancia entre el centro de la pelotita y el jugador</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> baddieCenterX = baddies[i].xCor;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> baddieCenterY = baddies[i].yCor;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> playerCenterX = playerXCor + playerWidth / 2;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> playerCenterY = playerYCor + playerHeight / 2;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #656565;">// Radio de la pelotita</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> baddieRadius = baddies[i].diameter / 2;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #656565;">// Dimensiones del jugador</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> playerWidthHalf = playerWidth / 2;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">float</span> playerHeightHalf = playerHeight / 2;
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #656565;">// Verifica si hay colisi&#243;n</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">boolean</span> conditionX = <span style="color: #006698;">abs</span>(baddieCenterX - playerCenterX) &lt; (baddieRadius + playerWidthHalf);
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #E7671C;">boolean</span> conditionY = <span style="color: #006698;">abs</span>(baddieCenterY - playerCenterY) &lt; (baddieRadius + playerHeightHalf);
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #6D9810;">if</span> (conditionX &amp;&amp; conditionY) {
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isCollided&nbsp;=&nbsp;<span style="color: #30987F;">true</span>; <span style="color: #656565;">// Colisi&#243;n detectada</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;}
+    &nbsp;&nbsp;}
+    &nbsp;&nbsp;
+    &nbsp;&nbsp;score&nbsp;+=&nbsp;0.1;
+    &nbsp;&nbsp;<span style="color: #006698;">textAlign</span>(<span style="color: #754891;">TOP</span>, <span style="color: #754891;">LEFT</span>);
+    &nbsp;&nbsp;<span style="color: #006698;">fill</span>(0, 102, 153);
+    &nbsp;&nbsp;<span style="color: #006698;">textSize</span>(25);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Puntaje: &quot;</span> + (<span style="color: #E7671C;">int</span>)score, 10, 40);
+    }
+    
+    <span style="color: #30987F;">void</span> drawPlayer() {
+    &nbsp;&nbsp;<span style="color: #006698;">stroke</span>(204, 132, 0);
+    &nbsp;&nbsp;<span style="color: #006698;">strokeWeight</span>(4);
+    &nbsp;&nbsp;<span style="color: #006698;">fill</span>(204, 102, 0);
+    &nbsp;&nbsp;<span style="color: #006698;">rect</span>(playerXCor, playerYCor, playerWidth, playerHeight, 7);
+    }
+    
+    <span style="color: #30987F;">void</span> showStartScreen() {
+    &nbsp;&nbsp;<span style="color: #006698;">background</span>(<span style="color: #006698;">loadImage</span>(<span style="color: #738A63;">&quot;bg.png&quot;</span>)); <span style="color: #656565;">// Fondo del juego</span>
+    &nbsp;&nbsp;<span style="color: #006698;">fill</span>(0);
+    &nbsp;&nbsp;<span style="color: #006698;">textSize</span>(50);
+    &nbsp;&nbsp;<span style="color: #006698;">textAlign</span>(<span style="color: #754891;">CENTER</span>, <span style="color: #754891;">CENTER</span>);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Esquivar los obst&#225;culos&quot;</span>, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2 - 50); <span style="color: #656565;">// T&#237;tulo</span>
+    
+    &nbsp;&nbsp;<span style="color: #656565;">// Bot&#243;n &quot;C&#243;mo jugar&quot;</span>
+    &nbsp;&nbsp;<span style="color: #006698;">textSize</span>(30);
+    &nbsp;&nbsp;<span style="color: #006698;">fill</span>(100); <span style="color: #656565;">// Color del bot&#243;n</span>
+    &nbsp;&nbsp;<span style="color: #006698;">rect</span>(<span style="color: #DB4D7A;">width</span> / 2 - 100, <span style="color: #DB4D7A;">height</span> / 2 + 20, 200, 50, 10); <span style="color: #656565;">// Dibujar el bot&#243;n</span>
+    &nbsp;&nbsp;<span style="color: #006698;">fill</span>(255); <span style="color: #656565;">// Color del texto</span>
+    &nbsp;&nbsp;<span style="color: #006698;">textAlign</span>(<span style="color: #754891;">CENTER</span>, <span style="color: #754891;">CENTER</span>);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;C&#243;mo jugar&quot;</span>, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2 + 45); <span style="color: #656565;">// Texto del bot&#243;n</span>
+    
+    &nbsp;&nbsp;<span style="color: #656565;">// Mostrar instrucciones si est&#225; activado</span>
+    &nbsp;&nbsp;<span style="color: #6D9810;">if</span> (showInstructions) {
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #006698;">textSize</span>(20);
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #006698;">fill</span>(0);
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Te mueves con A y D&quot;</span>, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2 + 100); <span style="color: #656565;">// Instrucciones</span>
+    &nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;<span style="color: #656565;">// Mensaje para iniciar el juego</span>
+    &nbsp;&nbsp;<span style="color: #006698;">textSize</span>(25);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Presiona cualquier tecla para jugar&quot;</span>, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2 + 150);
+    }
+    
+    <span style="color: #30987F;">void</span> showGameOverScreen() {
+    &nbsp;&nbsp;<span style="color: #006698;">fill</span>(255, 0, 0);
+    &nbsp;&nbsp;<span style="color: #006698;">textSize</span>(50);
+    &nbsp;&nbsp;<span style="color: #006698;">textAlign</span>(<span style="color: #754891;">CENTER</span>, <span style="color: #754891;">CENTER</span>);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Perdiste&quot;</span>, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2);
+    &nbsp;&nbsp;<span style="color: #006698;">textSize</span>(25);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Puntaje: &quot;</span> + (<span style="color: #E7671C;">int</span>)score, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2 + 50);
+    &nbsp;&nbsp;<span style="color: #006698;">text</span>(<span style="color: #738A63;">&quot;Presiona cualquier tecla para reiniciar&quot;</span>, <span style="color: #DB4D7A;">width</span> / 2, <span style="color: #DB4D7A;">height</span> / 2 + 100);
+    }
+    
+    <span style="color: #656565;">//&nbsp;Clase&nbsp;Enemigo</span>
+    <span style="color: #30987F;">class</span> Baddie {
+    &nbsp;&nbsp;<span style="color: #30987F;">public</span> <span style="color: #E7671C;">int</span> xCor;
+    &nbsp;&nbsp;<span style="color: #30987F;">public</span> <span style="color: #E7671C;">int</span> yCor;
+    &nbsp;&nbsp;<span style="color: #30987F;">public</span> <span style="color: #E7671C;">int</span> diameter; <span style="color: #656565;">// Cambi&#233; a &apos;diameter&apos; para usarlo en el m&#233;todo display</span>
+    
+    &nbsp;&nbsp;Baddie(<span style="color: #E7671C;">int</span> xVal, <span style="color: #E7671C;">int</span> yVal, <span style="color: #E7671C;">int</span> diameterVal) {
+    &nbsp;&nbsp;&nbsp;&nbsp;xCor&nbsp;=&nbsp;xVal;
+    &nbsp;&nbsp;&nbsp;&nbsp;yCor&nbsp;=&nbsp;yVal;
+    &nbsp;&nbsp;&nbsp;&nbsp;diameter&nbsp;=&nbsp;diameterVal;
+    &nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;<span style="color: #30987F;">public</span> <span style="color: #30987F;">void</span> drop(<span style="color: #E7671C;">float</span> speed) {
+    &nbsp;&nbsp;&nbsp;&nbsp;yCor&nbsp;+=&nbsp;speed;
+    &nbsp;&nbsp;}
+    
+    &nbsp;&nbsp;<span style="color: #30987F;">public</span> <span style="color: #30987F;">void</span> display() {
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #006698;">fill</span>(0, 102, 0);
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #006698;">ellipse</span>(xCor, yCor, diameter, diameter); <span style="color: #656565;">// Cambi&#233; a &apos;ellipse&apos; para dibujar una pelotita</span>
+    &nbsp;&nbsp;}
+    }
+    
+    </pre></body></html>
