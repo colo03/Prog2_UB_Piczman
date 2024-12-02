@@ -15,7 +15,7 @@ let gameStarted = false; // Para controlar la pantalla de inicio
 let showInstructions = false; // Variable para controlar la visualización de las instrucciones
 
 function preload() {
-    img = loadImage("bg.png"); // Asegúrate de que esta ruta sea correcta
+    img = loadImage("bg.png");
 }
 
 function setup() {
@@ -100,7 +100,7 @@ function initBaddies(xMin, xMax, yMin, yMax, num) {
     for (let i = 0; i < num; i++) {
         let x = random(xMin, xMax);
         let y = random(yMin, yMax);
-        let diameter = 30; // Puedes ajustar el diámetro como prefieras
+        let diameter = 30; //Ajuste del diametro del enemigo
         baddies[i] = new Baddie(x, y, diameter);
     }
 }
@@ -111,7 +111,7 @@ function moveBaddies() {
             baddies[i].yCor = -10;
         }
         baddies[i].display();
-        baddies[i].drop(random(1, 15));
+        baddies[i].drop(random(5,23));
 
         // Calcula la distancia entre el centro de la pelotita y el jugador
         let baddieCenterX = baddies[i].xCor;
@@ -135,9 +135,12 @@ function moveBaddies() {
     }
 
     score += 0.1;
-    textAlign(LEFT,TOP);
-    fill(0, 102, 153);
+
+    // Configuración para el texto
+    noStroke(); // Asegurarse de que el texto no tenga borde
+    fill(0, 102, 153); // Color del texto
     textSize(25);
+    textAlign(LEFT, TOP);
     text("Puntaje: " + int(score), 10, 40);
 }
 
@@ -160,7 +163,6 @@ function showStartScreen() {
     fill(100); // Color del botón
     rect(width / 2 - 100, height / 2 + 20, 200, 50, 10); // Dibujar el botón
     fill(255); // Color del texto
-    textAlign(CENTER, CENTER);
     text("Cómo jugar", width / 2, height / 2 + 45); // Texto del botón
 
     // Mostrar instrucciones si está activado
@@ -176,6 +178,7 @@ function showStartScreen() {
 }
 
 function showGameOverScreen() {
+    noStroke(); // Asegurar que el texto no tenga borde
     fill(255, 0, 0);
     textSize(50);
     textAlign(CENTER, CENTER);
@@ -198,7 +201,9 @@ class Baddie {
     }
 
     display() {
-        fill(0, 102, 0);
-        ellipse(this.xCor, this.yCor, this.diameter, this.diameter); // Cambié a 'ellipse' para dibujar una pelotita
+        stroke(255, 102, 204); // Borde rosa
+        strokeWeight(2);
+        fill(0, 102, 255); // Azul
+        ellipse(this.xCor, this.yCor, this.diameter, this.diameter); // Pelotita
     }
 }

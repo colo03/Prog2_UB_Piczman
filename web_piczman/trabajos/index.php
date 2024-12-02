@@ -19,7 +19,7 @@
         <a href="..\trabajos\index.php" class="active">Trabajos</a>
         <a href="..\contacto\index.php">Contacto </a>
         <a href="..\sobre_mi\index.php">Sobre mí</a>
-        <a href="..\juego\index.php">Juego</a>
+        <a href="..\juego\index.html">Juego</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>

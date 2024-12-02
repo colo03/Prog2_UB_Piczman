@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+  <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sketch</title>
-
-    <link rel="stylesheet" type="text/css" href="style.css">
-
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/javascript.js"></script>
+    <div class="topnav" id="myTopnav">
+      <img src="../imagenes_videos/Monograma_prog2.png">
+             <a href="..\index.php">Inicio</a>
+             <a href="..\trabajos\index.php">Trabajos</a>
+             <a href=../contacto/index.php>Contacto </a>
+             <a href="..\sobre_mi\index.php">Sobre mí</a>
+             <a href="..\juego\index.html" class="active">Juego</a>
+             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+               <i class="fa fa-bars"></i>
+             </a>
+           </div>
+           <BR>
   </head>
 
-  <body style="background-color: aqua; align-items: center; align-content: center;">
-    <div class="main_inicio">
+  <body>
+    <!-- Contenedor del juego -->
+    <ul style="align-items: center;">
+      <li>  <script src="sketch.js"></script></li>
+    </ul>
 
-  <div class="responsive_trabajos" style="background-color: aqua;">
-    <div class="gallery">
-        <script src="sketch.js"></script>
-      <div class="desc"></div>
-    </div>
-  </div>
-    </div>
+    <!-- Agregar otro código si es necesario -->
   </body>
 </html>
